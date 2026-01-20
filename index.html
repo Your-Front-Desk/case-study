@@ -6,6 +6,20 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
   <meta name="description" content="YourFrontDesk - AI Voice Receptionist Case Study">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+
+  <!-- Open Graph / Social -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="YourFrontDesk Case Study">
+  <meta property="og:description" content="How we built an AI voice receptionist that answers real phone calls">
+  <meta property="og:image" content="https://your-front-desk.github.io/case-study/logo.png">
+  <meta property="og:url" content="https://your-front-desk.github.io/case-study/">
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="YourFrontDesk Case Study">
+  <meta name="twitter:description" content="How we built an AI voice receptionist that answers real phone calls">
+  <meta name="twitter:image" content="https://your-front-desk.github.io/case-study/logo.png">
+
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsify@4/lib/themes/dark.css">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
@@ -22,13 +36,27 @@
       background-color: #0a0f1a;
     }
 
-    /* Hide sidebar - single page */
+    /* Sidebar */
     .sidebar {
-      display: none;
+      background-color: #0d1321;
+      border-right: 1px solid #1a2332;
+    }
+
+    .sidebar-nav a {
+      color: #a0aec0;
+    }
+
+    .sidebar-nav a:hover,
+    .sidebar-nav li.active > a {
+      color: #00D4AA;
+    }
+
+    .app-name-link {
+      color: #fff !important;
+      font-weight: 700;
     }
 
     .content {
-      left: 0 !important;
       background-color: #0a0f1a;
     }
 
@@ -161,9 +189,9 @@
   <div id="app">Loading...</div>
   <script>
     window.$docsify = {
-      name: '',
+      name: 'YourFrontDesk',
       homepage: 'CASE-STUDY.md',
-      loadSidebar: false,
+      loadSidebar: true,
       coverpage: false,
       themeColor: '#00D4AA'
     }
