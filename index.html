@@ -40,10 +40,16 @@
     .sidebar {
       background-color: #0d1321;
       border-right: 1px solid #1a2332;
+      padding-top: 20px;
+    }
+
+    .sidebar-nav {
+      padding: 0 15px;
     }
 
     .sidebar-nav a {
       color: #a0aec0;
+      font-size: 14px;
     }
 
     .sidebar-nav a:hover,
@@ -51,9 +57,21 @@
       color: #00D4AA;
     }
 
-    .app-name-link {
-      color: #fff !important;
-      font-weight: 700;
+    .sidebar-nav ul {
+      padding-left: 0;
+    }
+
+    .sidebar-nav li {
+      margin: 8px 0;
+    }
+
+    /* Logo in sidebar */
+    .app-name {
+      padding: 20px 15px 30px;
+    }
+
+    .app-name img {
+      height: 50px;
     }
 
     .content {
@@ -62,19 +80,8 @@
 
     .markdown-section {
       max-width: 800px;
-      margin: 0 auto;
       padding: 40px 20px;
       color: #e2e8f0;
-    }
-
-    /* Logo header */
-    .logo-header {
-      text-align: center;
-      padding: 40px 20px 20px;
-    }
-
-    .logo-header img {
-      height: 80px;
     }
 
     .markdown-section h1 {
@@ -198,17 +205,16 @@
   </style>
 </head>
 <body>
-  <div class="logo-header">
-    <img src="logo.png" alt="YourFrontDesk">
-  </div>
   <div id="app">Loading...</div>
   <script>
     window.$docsify = {
-      name: 'YourFrontDesk',
+      name: '<img src="logo.png" alt="YourFrontDesk">',
+      nameLink: '#/',
       homepage: 'CASE-STUDY.md',
       loadSidebar: true,
       coverpage: false,
-      themeColor: '#00D4AA'
+      themeColor: '#00D4AA',
+      subMaxLevel: 2
     }
   </script>
   <script src="https://cdn.jsdelivr.net/npm/docsify@4"></script>
