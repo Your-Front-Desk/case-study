@@ -1,6 +1,6 @@
 # YourFrontDesk: Case Study
 
-**How we built an AI-powered phone system for hotels in Gibraltar**
+> **How we built an AI-powered phone system for hotels in Gibraltar**
 
 ---
 
