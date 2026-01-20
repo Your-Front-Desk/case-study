@@ -141,22 +141,107 @@ We configured Asterisk to play "Hello World" when someone calls. Then we called 
 
 ---
 
-### Chapter 5: What's Next - Adding AI (Coming Soon)
+### Chapter 5: Connecting the AI Voice Assistant (January 20, 2026)
+
+**The challenge:** We had a working phone system, but calls just played "Hello World". We needed to connect to Vapi, an AI platform that would have actual conversations with callers.
+
+**What is Vapi?**
+Vapi is an AI voice platform. When we send a call to Vapi:
+1. It listens to what the caller says
+2. Converts speech to text
+3. An AI (like ChatGPT) generates a response
+4. Text is converted back to natural speech
+5. The caller hears the AI respond
+
+All this happens in under a second - the conversation feels natural.
+
+**The problem: SIP configuration**
+Connecting two phone systems (Asterisk and Vapi) requires precise settings. Both systems need to "speak the same language" and trust each other.
+
+Our first attempts failed with cryptic errors:
+- "403 Forbidden" - Vapi was rejecting our calls
+- "401 Unauthorized" - authentication wasn't working
+
+**The breakthrough:**
+After researching Vapi's documentation, we discovered the correct format for connecting. The key was using a specific address format that Vapi expects - without the right format, Vapi didn't know where to route our calls.
+
+**The test:**
+We made a test call. The server received it, forwarded to Vapi, and... the AI answered! We had our first conversation with the AI receptionist.
+
+**Result:** Calls to the Gibraltar number now connect to an AI that can have natural conversations.
+
+---
+
+### Chapter 6: Under Attack - Securing the Server (January 20, 2026)
+
+**The surprise discovery:**
+While debugging the Vapi connection, we noticed something alarming in the server logs. Thousands of login attempts from IP addresses around the world.
+
+**What was happening?**
+Automated bots constantly scan the internet looking for phone systems. When they find one, they try to:
+- Register fake phone extensions
+- Make free international calls through your system
+- Use your server for fraud
+
+In just a few hours, we saw:
+- 87,000+ attempts from one attacker
+- 3,000+ from another
+- Multiple attackers trying different techniques
+
+**The risk:**
+If attackers succeed, they could:
+- Run up massive phone bills
+- Use the system for scam calls
+- Damage the hotel's reputation
+
+**Our response:**
+
+**Step 1: Identify the attackers**
+We analyzed the server logs to find which IP addresses were attacking us and blocked the worst offenders immediately.
+
+**Step 2: Install automatic protection**
+We set up fail2ban - software that monitors login attempts. When it sees too many failures from one address, it automatically blocks that attacker for 24 hours.
+
+**Step 3: Create an allow-list**
+We configured the firewall to explicitly trust:
+- The phone company (Gibtelecom)
+- The AI platform (Vapi)
+- Our secure remote access (Tailscale)
+
+Everyone else has to pass through the automatic protection system.
+
+**Step 4: Make it permanent**
+We saved all the security rules so they survive server restarts.
+
+**The result:**
+Within minutes of setup, the security system had already blocked 2 new attackers automatically. The system now protects itself 24/7.
+
+**What we learned:**
+Any server exposed to the internet will be attacked. It's not a question of "if" but "when". Building security from day one is essential.
+
+---
+
+### Chapter 7: The AI Receptionist is Live (January 20, 2026)
 
 **Current state:**
-Right now, when you call the number, you hear "Hello World" and then it hangs up. This was just a test to prove the phone line works.
+When you call the Gibraltar number:
+1. The call arrives at our server
+2. Our server authenticates with Vapi
+3. Vapi's AI assistant answers
+4. You have a natural conversation
+5. The call ends cleanly
 
-**Next step:**
-Connect to Vapi, an AI voice platform that will:
-1. Answer calls with a natural voice
-2. Understand what the caller says
-3. Have a real conversation
-4. Take actions (book appointments, answer questions, transfer calls)
+**What the AI can do:**
+- Greet callers professionally
+- Answer questions about the hotel
+- Provide information from a knowledge base
+- Transfer to a human if needed
 
-**What we need:**
-1. Vapi account and API credentials
-2. Configure what the AI should say and do
-3. Update our server to route calls to Vapi
+**Next steps:**
+- Train the AI with specific hotel information
+- Set up business hours handling
+- Add booking capabilities
+- Configure voicemail for after-hours
 
 ---
 
@@ -195,7 +280,8 @@ Connect to Vapi, an AI voice platform that will:
 | Asterisk | Phone system software | Routes calls, plays messages |
 | SIP Trunk | Connection to phone network | Direct internal connection |
 | DDI | The actual phone number | Gibraltar number |
-| Vapi | AI voice platform | Coming soon |
+| Vapi | AI voice platform | Answers calls with AI assistant |
+| fail2ban | Automatic attack blocker | Bans attackers for 24 hours |
 
 ---
 
@@ -243,6 +329,8 @@ ssh -i [keyfile].pem [user]@[tailscale-ip]
 | **DDI** | Direct Dial In - the actual phone number people call |
 | **RTP** | The protocol that carries the actual voice audio |
 | **Vapi** | An AI platform that can answer phone calls with a virtual assistant |
+| **fail2ban** | Security software that automatically blocks attackers |
+| **Firewall** | Rules that control what network traffic is allowed |
 
 ---
 
@@ -256,7 +344,10 @@ ssh -i [keyfile].pem [user]@[tailscale-ip]
 | Jan 17, 2026 | Basic configuration completed |
 | Jan 20, 2026 | SIP trunk connected (no auth needed) |
 | Jan 20, 2026 | **First successful test call!** |
-| Next | Connect Vapi AI to answer calls |
+| Jan 20, 2026 | Discovered SIP scanner attacks (87,000+ attempts) |
+| Jan 20, 2026 | **Vapi AI connected and working!** |
+| Jan 20, 2026 | Security hardening completed (fail2ban + firewall) |
+| Next | Train AI with hotel-specific knowledge |
 
 ---
 
@@ -268,9 +359,11 @@ ssh -i [keyfile].pem [user]@[tailscale-ip]
 | Remote Access | ✅ Working (Tailscale) |
 | Phone System (Asterisk) | ✅ Running |
 | Phone Line (SIP Trunk) | ✅ Connected & tested |
-| AI Assistant (Vapi) | ⏳ Next step |
+| AI Assistant (Vapi) | ✅ Connected & working |
+| Security (fail2ban) | ✅ Active, auto-blocking attackers |
+| Firewall | ✅ Configured with whitelist |
 
-**Bottom line:** The phone infrastructure is complete and tested. When you call the DDI number, the call reaches our server. The next step is connecting Vapi so an AI answers instead of "Hello World".
+**Bottom line:** The complete AI phone system is live. When you call the Gibraltar number, an AI receptionist answers and has a natural conversation with you. The system is protected against attacks and runs 24/7.
 
 ---
 
@@ -286,17 +379,23 @@ ssh -i [keyfile].pem [user]@[tailscale-ip]
 
 5. **Internal networks are simpler** - Because our server is inside the provider's network, we didn't need username/password for the SIP trunk. It's a direct trusted connection.
 
+6. **Read the documentation carefully** - The Vapi connection took several attempts because we used the wrong address format. The official docs had the answer.
+
+7. **Security can't wait** - Within hours of going live, we had 90,000+ attack attempts. Always build security from day one.
+
+8. **Automate security** - Manual IP blocking doesn't scale. Automated tools like fail2ban protect you while you sleep.
+
 ---
 
 ## Next Steps
 
-1. **Set up Vapi account** at https://vapi.ai
-2. **Create an AI assistant** in Vapi dashboard
-3. **Get the assistant ID**
-4. **Connect Asterisk to Vapi** (5 minute configuration)
-5. **Test end-to-end** - call the number, AI should answer
+1. **Train the AI** - Add hotel-specific knowledge and FAQs
+2. **Set up business hours** - Different behaviour for day/night
+3. **Add booking capabilities** - Let the AI take reservations
+4. **Configure voicemail** - For after-hours or when AI can't help
+5. **Monitor and improve** - Review calls and refine AI responses
 
 ---
 
 *Document created: January 20, 2026*
-*Last updated: January 20, 2026*
+*Last updated: January 20, 2026 - Added Vapi integration and security chapters*
